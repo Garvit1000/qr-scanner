@@ -1,4 +1,4 @@
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, orderBy, limit as limitQuery } from 'firebase/firestore';
 import { db } from './firebase';
 import validUIDs from '../data/validUIDs.json';
 
@@ -41,6 +41,22 @@ class QRService {
       return validUIDsSet.has(uid);
     } catch (error) {
       console.error('Error validating UID:', error);
+      throw error;
+    }
+  }
+
+  async getRecentScans(maxResults = 20) {
+    try {
+      const scansRef = collection(db, COLLECTION_NAME);
+      const q = query(scansRef, orderBy('timestamp', 'desc'), limitQuery(maxResults));
+      const querySnapshot = await getDocs(q);
+      
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+    } catch (error) {
+      console.error('Error fetching recent scans:', error);
       throw error;
     }
   }
