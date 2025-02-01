@@ -17,7 +17,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera."
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
       }
     },
     "android": {
@@ -25,7 +26,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA"]
+      "permissions": [
+        "CAMERA",
+        "android.permission.CAMERA"
+      ],
+      "package": "com.garvit001.qrscanner"
     },
     "plugins": [
       [
@@ -35,6 +40,11 @@
         }
       ]
     ],
-    "sdkVersion": "49.0.0"
+    "sdkVersion": "49.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "e30acaf3-9f36-4525-af10-e8eeb9e4a7c9"
+      }
+    }
   }
 }
